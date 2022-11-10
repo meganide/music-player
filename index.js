@@ -1,7 +1,13 @@
+const songs = document.querySelector('.songs');
+
 async function getToken() {
-  const response = await fetch('https://blooming-reef-63913.herokuapp.com/api/token');
-  const data = await response.json();
-  getSongs(data.token);
+  try {
+    const response = await fetch('https://blooming-reef-63913.herokuapp.com/api/token');
+    const data = await response.json();
+    getSongs(data.token);
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 async function getSongs(token) {
@@ -16,15 +22,19 @@ async function getSongs(token) {
     },
   };
 
-  const response = await fetch(FULL_URL, headers);
-  const data = await response.json();
+  try {
+    const response = await fetch(FULL_URL, headers);
+    const data = await response.json();
+    displaySongs(data.tracks);
+    console.log(data.tracks);
+  } catch (err) {
+    console.error(err);
+  }
 
-  console.log(data.tracks);
-  displaySongs(data.tracks);
 }
 
 function displaySongs(tracks) {
-  document.querySelectorAll('song').forEach((song) => {
+  document.querySelectorAll('.song').forEach((song) => {
     song.remove();
   });
 
@@ -32,6 +42,8 @@ function displaySongs(tracks) {
     createSong(track, index);
     console.log(track);
   });
+
+  songs.classList.toggle('hide');
 }
 
 function getSongtitle(track) {
@@ -66,7 +78,7 @@ function getArtists(track) {
 }
 
 function createSong(track, index) {
-  const songs = document.querySelector('.songs');
+  const songsBottom = document.querySelector('.songs__bottom');
   const article = document.createElement('article');
   article.classList.add('song', 'grid');
 
@@ -85,9 +97,9 @@ function createSong(track, index) {
   dateAdded.innerText = track.album.release_date;
 
   const duration = document.createElement('p');
-  const minutes = Math.floor((track.duration_ms/1000)/60);
-  let seconds = String(Math.floor(track.duration_ms/1000)%60)
-  console.log(seconds.length)
+  const minutes = Math.floor(track.duration_ms / 1000 / 60);
+  let seconds = String(Math.floor(track.duration_ms / 1000) % 60);
+  console.log(seconds.length);
   if (seconds.length === 1) {
     seconds = '0' + seconds;
   }
@@ -95,12 +107,15 @@ function createSong(track, index) {
 
   article.append(number);
   article.append(songTitleContainer);
-  songs.append(article);
+  songsBottom.append(article);
   article.append(artists);
   article.append(album);
   article.append(dateAdded);
   article.append(duration);
-
 }
 
 document.querySelector('#search__button').addEventListener('click', getToken);
+document.querySelector('.close').addEventListener('click', () => {
+  document.querySelector('#searchInput').value = ''
+  songs.classList.toggle('hide');
+});

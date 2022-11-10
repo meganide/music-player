@@ -185,19 +185,32 @@ img {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 1rem;
+  /* padding: 1rem; */
   border-radius: 10px;
-  background: #2b5876;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to bottom, #4e4376, #152e3f);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #31255f, #0d2c41); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  overflow-y: scroll;
-  max-height: 500px;
+  background: #2b5876;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #4e4376, #152e3f);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #31255f, #0d2c41);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   z-index: 500;
 }
 
-.songs__headings {
-  margin-bottom: 1rem;
+.songs__bottom::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: rgb(39, 38, 87);
+  /* border-radius: 10px; */
 }
+
+.songs__bottom::-webkit-scrollbar {
+  width: 10px;
+  background-color: rgb(39, 38, 87);
+}
+
+.songs__bottom::-webkit-scrollbar-thumb {
+  background-color: rgb(52, 51, 97);
+}
+
 
 .grid {
   display: grid;
@@ -233,12 +246,33 @@ img {
 }
 
 .close {
-  margin-left: auto;
   display: block;
+  position: absolute;
+  right: 5px;
+  top: 0;
+  height: auto;
+  padding-top: 5px;
 }
 
 .clock {
   height: 23.64px;
   object-fit: contain;
   width: fit-content;
+}
+
+.songs__top {
+  position: sticky;
+  top: 0;
+  background-color: #272657;
+  padding: .625rem 1rem;
+}
+
+.songs__bottom {
+  padding: 0 1rem;
+  overflow-y: scroll;
+  max-height: 500px;
+}
+
+.hide {
+  display: none;
 }
