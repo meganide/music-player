@@ -34,7 +34,7 @@ body {
 
 
 
-  
+
 
 }
 
@@ -175,4 +175,70 @@ img {
 
 .music-player__button--play {
   width: 40px;
+}
+
+.songs {
+  color: rgb(180, 180, 180);
+  width: 75%;
+  margin: 0 auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 1rem;
+  border-radius: 10px;
+  background: #2b5876;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #4e4376, #152e3f);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #31255f, #0d2c41); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  overflow-y: scroll;
+  max-height: 500px;
+  z-index: 500;
+}
+
+.songs__headings {
+  margin-bottom: 1rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 3fr 4fr 2fr 2fr 1fr;
+  align-items: center;
+}
+
+.song {
+  cursor: pointer;
+  font-size: 0.8rem;
+  padding: 0.4rem 0;
+  color: rgb(146, 146, 146);
+}
+
+.song p,
+.song__title {
+  max-width: 80%;
+}
+
+.song:hover {
+  background-color: rgba(70, 57, 112, 0.281);
+}
+
+.song__title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.song__title img {
+  height: 30px;
+  width: 30px;
+}
+
+.close {
+  margin-left: auto;
+  display: block;
+}
+
+.clock {
+  height: 23.64px;
+  object-fit: contain;
+  width: fit-content;
 }
