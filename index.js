@@ -2,6 +2,9 @@ const songs = document.querySelector('.songs');
 const audio = document.querySelector('#audio');
 const play = document.querySelector('#play-pause');
 const progress = document.querySelector('#progress');
+const rewind = document.querySelector('#rewind');
+const forward = document.querySelector('#forward');
+
 
 async function getToken() {
   try {
@@ -177,3 +180,21 @@ play.addEventListener('click', () => {
 });
 
 audio.addEventListener('timeupdate', updateTime);
+
+rewind.addEventListener('click', () => {
+  audio.currentTime = audio.currentTime - 5;
+})
+
+forward.addEventListener('click', () => {
+  audio.currentTime = audio.currentTime + 5;
+})
+
+audio.addEventListener('ended', () => {
+  play.setAttribute('src', './images/play.svg');
+});
+
+document.querySelector('#searchInput').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    getToken()
+  }
+})
