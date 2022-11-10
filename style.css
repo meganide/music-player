@@ -215,6 +215,8 @@ img {
   max-width: 80%;
 }
 
+
+
 .song:hover {
   background-color: rgba(70, 57, 112, 0.281);
 }
@@ -253,7 +255,6 @@ img {
 }
 
 .songs__bottom {
-  padding: 0 1rem;
   overflow-y: scroll;
   max-height: 500px;
 }

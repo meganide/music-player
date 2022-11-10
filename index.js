@@ -125,6 +125,7 @@ function createSong(track, index) {
 
   const number = document.createElement('p');
   number.innerText = index + 1;
+  number.style.paddingLeft = '1rem';
 
   const songTitleContainer = getSongtitle(track);
 
@@ -133,14 +134,11 @@ function createSong(track, index) {
   const album = document.createElement('p');
   const albumName = track.album.name;
   album.innerText = albumName;
-  album.style.marginLeft = '6px';
 
   const dateAdded = document.createElement('p');
   dateAdded.innerText = track.album.release_date;
-  dateAdded.style.marginLeft = '8px';
 
   const duration = createDuration(track);
-  duration.style.marginLeft = '10px';
 
   article.append(number);
   article.append(songTitleContainer);
