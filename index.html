@@ -8,9 +8,10 @@
     <title>Musikspelare</title>
   </head>
   <body>
-    <audio id="audio">
-      <source src="" type="" id="audio-src" />
+    <audio id="audio" preload="metadata">
+     
     </audio>
+
 
     <section class="songs hide">
       <section class="songs__top">
@@ -42,12 +43,12 @@
       <section class="music-player">
         <img class="music-player__img" src="./images/music.png" alt="" />
         <section class="music-player__controls">
-          <h2>Track name</h2>
-          <h3>Artist Name</h3>
+          <h2 id="song-title">Track name</h2>
+          <h3 id="artist-name">Artist Name</h3>
           <section class="music-player__progress">
-            <span>0:00</span>
+            <span id="currentTime">0:00</span>
             <progress id="progress" value="0.3" max="1"></progress>
-            <span>3:14</span>
+            <span id="duration">3:14</span>
           </section>
           <section class="music-player__buttons">
             <button class="search__button">

@@ -149,8 +149,8 @@ img {
 #progress[value]::-webkit-progress-value {
   background-color: #3C556B;
   border-radius: 10px;
-
 }
+
 
 .music-player__controls {
   padding: 1rem 5px 0.5rem 5px;
@@ -180,6 +180,7 @@ img {
 .songs {
   color: rgb(180, 180, 180);
   width: 75%;
+  max-width: 1000px;
   margin: 0 auto;
   position: absolute;
   top: 50%;

@@ -1,4 +1,7 @@
 const songs = document.querySelector('.songs');
+const audio = document.querySelector('#audio');
+const play = document.querySelector('#play-pause');
+const progress = document.querySelector('#progress');
 
 async function getToken() {
   try {
@@ -30,7 +33,6 @@ async function getSongs(token) {
   } catch (err) {
     console.error(err);
   }
-
 }
 
 function displaySongs(tracks) {
@@ -77,6 +79,42 @@ function getArtists(track) {
   return artist;
 }
 
+function createDuration(track) {
+  const duration = document.createElement('p');
+  const minutes = Math.floor(track.duration_ms / 1000 / 60);
+  let seconds = String(Math.floor(track.duration_ms / 1000) % 60);
+  if (seconds.length === 1) {
+    seconds = '0' + seconds;
+  }
+  duration.innerText = minutes + ':' + seconds;
+
+  return duration;
+}
+
+function playSong(track, artists) {
+  console.log(track);
+  songs.classList.toggle('hide');
+  const SONG_URL = track.preview_url;
+
+  document.querySelector('#song-title').innerText = track.name;
+  console.log(artists);
+  document.querySelector('#artist-name').innerText = artists.innerText;
+
+  audio.setAttribute('src', SONG_URL);
+  play.setAttribute('src', './images/pause.svg');
+  audio.onloadedmetadata = function () {
+    const duration = audio.duration;
+    progress.setAttribute('max', duration);
+    const minutes = Math.floor(duration / 60);
+    let seconds = String(Math.floor(duration) % 60);
+    if (seconds.length === 1) {
+      seconds = '0' + seconds;
+    }
+    document.querySelector('#duration').innerText = minutes + ':' + seconds;
+  };
+  audio.play();
+}
+
 function createSong(track, index) {
   const songsBottom = document.querySelector('.songs__bottom');
   const article = document.createElement('article');
@@ -96,26 +134,46 @@ function createSong(track, index) {
   const dateAdded = document.createElement('p');
   dateAdded.innerText = track.album.release_date;
 
-  const duration = document.createElement('p');
-  const minutes = Math.floor(track.duration_ms / 1000 / 60);
-  let seconds = String(Math.floor(track.duration_ms / 1000) % 60);
-  console.log(seconds.length);
-  if (seconds.length === 1) {
-    seconds = '0' + seconds;
-  }
-  duration.innerText = minutes + ':' + seconds;
+  const duration = createDuration(track);
 
   article.append(number);
   article.append(songTitleContainer);
-  songsBottom.append(article);
   article.append(artists);
   article.append(album);
   article.append(dateAdded);
   article.append(duration);
+
+  article.addEventListener('click', () => playSong(track, artists));
+
+  songsBottom.append(article);
+}
+
+function updateTime(e) {
+  const currentTime = audio.currentTime;
+  progress.setAttribute('value', currentTime);
+  const minutes = Math.floor(currentTime / 60);
+  let seconds = String(Math.floor(currentTime) % 60);
+  if (seconds.length === 1) {
+    seconds = '0' + seconds;
+  }
+  document.querySelector('#currentTime').innerText = minutes + ':' + seconds;
 }
 
 document.querySelector('#search__button').addEventListener('click', getToken);
+
 document.querySelector('.close').addEventListener('click', () => {
-  document.querySelector('#searchInput').value = ''
+  document.querySelector('#searchInput').value = '';
   songs.classList.toggle('hide');
 });
+
+play.addEventListener('click', () => {
+  if (play.getAttribute('src').includes('play')) {
+    play.setAttribute('src', './images/pause.svg');
+    audio.play();
+  } else {
+    play.setAttribute('src', './images/play.svg');
+    audio.pause();
+  }
+});
+
+audio.addEventListener('timeupdate', updateTime);
