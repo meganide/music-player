@@ -29,7 +29,13 @@
 
     <div class="container">
       <section class="search">
-        <input type="text" name="" id="searchInput" placeholder="Artists, songs, albums..." />
+        <input
+          type="text"
+          autofocus
+          name=""
+          id="searchInput"
+          placeholder="Artists, songs, albums..."
+        />
         <button class="search__button" id="search__button">
           <img class="search__logo" src="./images/searchicon.svg" alt="" />
         </button>
@@ -62,6 +68,19 @@
                 class="music-player__button music-player__button--forwards"
                 src="./images/rewind.svg"
                 alt=""
+              />
+            </button>
+            <button id="volume" class="search__button">
+              <img class="music-player__button volume" src="./images/volume.png" alt="" />
+              <input
+                class="volume-range"
+                type="range"
+                name=""
+                id="volume-slider"
+                min="0"
+                max="1"
+                value="1"
+                step="0.025"
               />
             </button>
           </section>

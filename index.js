@@ -1,11 +1,15 @@
+// *********************************** VARIABLES ***********************************
 const songs = document.querySelector('.songs');
 const audio = document.querySelector('#audio');
 const play = document.querySelector('#play-pause');
 const progress = document.querySelector('#progress');
 const rewind = document.querySelector('#rewind');
 const forward = document.querySelector('#forward');
+const volumeSlider = document.querySelector('#volume-slider');
+const volumeButton = document.querySelector('#volume');
 
 
+// *********************************** FUNCTIONS ***********************************
 async function getToken() {
   try {
     const response = await fetch('https://blooming-reef-63913.herokuapp.com/api/token');
@@ -32,7 +36,6 @@ async function getSongs(token) {
     const response = await fetch(FULL_URL, headers);
     const data = await response.json();
     displaySongs(data.tracks);
-    console.log(data.tracks);
   } catch (err) {
     console.error(err);
   }
@@ -45,7 +48,6 @@ function displaySongs(tracks) {
 
   tracks.items.forEach((track, index) => {
     createSong(track, index);
-    console.log(track);
   });
 
   songs.classList.toggle('hide');
@@ -95,12 +97,10 @@ function createDuration(track) {
 }
 
 function playSong(track, artists) {
-  console.log(track);
   songs.classList.toggle('hide');
   const SONG_URL = track.preview_url;
 
   document.querySelector('#song-title').innerText = track.name;
-  console.log(artists);
   document.querySelector('#artist-name').innerText = artists.innerText;
 
   audio.setAttribute('src', SONG_URL);
@@ -141,7 +141,6 @@ function createSong(track, index) {
 
   const duration = createDuration(track);
   duration.style.marginLeft = '10px';
-  
 
   article.append(number);
   article.append(songTitleContainer);
@@ -166,6 +165,14 @@ function updateTime(e) {
   document.querySelector('#currentTime').innerText = minutes + ':' + seconds;
 }
 
+function updateVolume(e) {
+  const volume = e.target.value;
+  audio.volume = volume;
+}
+
+
+
+// *********************************** EVENT LISTENERS ***********************************
 document.querySelector('#search__button').addEventListener('click', getToken);
 
 document.querySelector('.close').addEventListener('click', () => {
@@ -187,11 +194,11 @@ audio.addEventListener('timeupdate', updateTime);
 
 rewind.addEventListener('click', () => {
   audio.currentTime = audio.currentTime - 5;
-})
+});
 
 forward.addEventListener('click', () => {
   audio.currentTime = audio.currentTime + 5;
-})
+});
 
 audio.addEventListener('ended', () => {
   play.setAttribute('src', './images/play.svg');
@@ -199,6 +206,16 @@ audio.addEventListener('ended', () => {
 
 document.querySelector('#searchInput').addEventListener('keydown', (e) => {
   if (e.key === 'Enter') {
-    getToken()
+    getToken();
   }
-})
+});
+
+volumeSlider.addEventListener('input', updateVolume);
+
+volumeButton.addEventListener('mouseover', () => {
+  volumeSlider.classList.add('faded');
+});
+
+volumeButton.addEventListener('mouseleave', () => {
+  volumeSlider.classList.remove('faded');
+});
